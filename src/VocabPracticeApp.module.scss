@@ -1,3 +1,11 @@
+.header {
+  padding: 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: #1677ff;
+}
+
 .content {
-  height: 100vh;
+  min-height: calc(100vh - 64px);
 }
