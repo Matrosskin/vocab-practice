@@ -35,9 +35,9 @@ export function VocabPracticeApp() {
         <Spin spinning={!isDetermined} size='large' tip='Loading...'>
           <Layout>
             <Header className={s.header}>
-              <Button size='large' onClick={onDoLogout}>
+              {user && <Button size='large' onClick={onDoLogout}>
                 Logout
-              </Button>
+              </Button>}
             </Header>
 
             <Content className={s.content}>
