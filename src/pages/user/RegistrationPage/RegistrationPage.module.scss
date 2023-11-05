@@ -1,0 +1,32 @@
+.registrationCardContainer {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.registrationCard {
+  max-width: 515px;
+  flex: 1;
+}
+
+.buttonsContainer {
+  display: flex;
+  gap: 10px;
+}
+
+.errorMessage {
+  margin-bottom: 16px;
+}
+
+@media (max-width: 576px) {
+  .loginCard {
+    max-width: 90%;
+    width: 90%;
+  }
+
+  .buttonsContainer {
+    justify-content: center;
+    flex-direction: row-reverse;
+  }
+}
