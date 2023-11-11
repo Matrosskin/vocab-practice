@@ -28,14 +28,14 @@ export function FirebaseReadyProvider({ children }: PropsWithChildren) {
     }
 
     if (process.env.NODE_ENV !== 'production') {
-      fetch('http://localhost:4400/emulators')
+      fetch(`http://${window.location.hostname}:4400/emulators`)
       .then((res) => res.json())
       .then((data) => {
         const auth = getAuth()
-        connectAuthEmulator(auth, `http://${data.auth.host}:${data.auth.port}`, { disableWarnings: true })
+        connectAuthEmulator(auth, `http://${window.location.hostname}:${data.auth.port}`, { disableWarnings: true })
 
         const db = getDatabase()
-        connectDatabaseEmulator(db, data.database.host, data.database.port)
+        connectDatabaseEmulator(db, window.location.hostname, data.database.port)
 
         whenFBReady()
       })
