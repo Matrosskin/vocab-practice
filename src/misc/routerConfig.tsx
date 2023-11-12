@@ -3,6 +3,7 @@ import { VocabPracticeApp } from '../VocabPracticeApp'
 import { LoginPage } from '../pages/user/LoginPage/LoginPage'
 import { RegistrationPage } from '../pages/user/RegistrationPage/RegistrationPage'
 import { VocabPage } from '../pages/VocabPage/VocabPage'
+import { LogoutPage } from "../pages/user/LogoutPage/LogoutPage"
 
 export const routerConfig: RouteObject[] = [
     {
@@ -12,6 +13,10 @@ export const routerConfig: RouteObject[] = [
           {
             path: 'login',
             element: <LoginPage />
+          },
+          {
+            path: 'logout',
+            element: <LogoutPage />
           },
           {
             path: 'registration',
