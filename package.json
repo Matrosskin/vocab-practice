@@ -27,7 +27,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "firebase emulators:exec --only auth,database 'npm run start:react2'",
+    "start": "firebase emulators:exec --only auth,database --export-on-exit ./test_data/ --import ./test_data/ 'npm run start:react2'",
     "start:react": "react-scripts start",
     "start:react2": "FORCE_COLOR=true react-scripts start | cat",
     "build": "react-scripts build",

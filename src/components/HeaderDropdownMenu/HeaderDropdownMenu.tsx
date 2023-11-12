@@ -2,34 +2,77 @@ import { faBars } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Button, Dropdown, MenuProps } from "antd"
 import { useAppSelector } from "../../hooks/store"
-import { useMemo } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { insertAIf } from "../../utils/insertAIf"
 import { ItemType } from "antd/es/menu/hooks/useItems"
 import { Link, useLocation } from "react-router-dom"
+import { getDatabase, onChildAdded, onChildChanged, onChildRemoved, ref } from "firebase/database"
+
+interface IVocab {
+  id: string,
+  name: string,
+}
 
 export const HeaderDropdownMenu = () => {
   const user = useAppSelector((state) => state.user.user)
   const location = useLocation()
+  const [vocabs, setVocabs] = useState<IVocab[]>([])
 
+  // TODO: Extract fetching of vocabs into separate hook.
+  useEffect(() => {
+    if (!user?.uid) return
+
+    let temporaryVocabs: IVocab[] = []
+    const db = getDatabase()
+    const vocabListRef = ref(db, `v-p-app-v1/users/${user?.uid}/vocabs`)
+    const stopOnChildAdded = onChildAdded(vocabListRef, (snapshot) => {
+      temporaryVocabs = [
+        ...temporaryVocabs,
+        {
+          id: snapshot.key!,
+          name: snapshot.val().name as string
+        }
+      ]
+      setVocabs(temporaryVocabs)
+    })
+    const stopOnChildChanged = onChildChanged(vocabListRef, (snapshot) => {
+      temporaryVocabs = temporaryVocabs.map((vocab) => (vocab.id === snapshot.key ? {
+        id: snapshot.key!,
+        name: snapshot.val().name as string
+      } : vocab))
+      setVocabs(temporaryVocabs)
+    })
+    const stopOnChildRemoved = onChildRemoved(vocabListRef, (snapshot) => {
+      temporaryVocabs = temporaryVocabs.filter(({id}) => id === snapshot.key)
+      setVocabs(temporaryVocabs)
+    })
+
+    return () => {
+      stopOnChildAdded()
+      stopOnChildChanged()
+      stopOnChildRemoved()
+
+      setVocabs([])
+    }
+  }, [user?.uid])
+
+  // TODO: Managing of vocabs should be moved into "Settings" page, so there will be a list with create, edit and delete buttons.
   const menuItems = useMemo((): MenuProps['items'] => {
     return [
       ...insertAIf<ItemType>(
-        Boolean(user),
+        Boolean(user && vocabs.length),
         {
           key: 'vocabs',
           type: 'group',
           label: 'Your vocabs:',
-          children: [
-            {
-              key: 'vocab 1',
-              label: 'Vocab 1',
-            },
-            {
-              key: 'vocab 2',
-              label: 'Vocab 2',
-            },
-          ]
-        },
+          children: vocabs.map(({id, name}) => ({
+            key: `vocab-item-${id}`,
+            label: name
+          }))
+        }
+      ),
+      ...insertAIf<ItemType>(
+        Boolean(user),
         {
           key: 'createVocab',
           label: (
@@ -66,7 +109,7 @@ export const HeaderDropdownMenu = () => {
         }
       )
     ]
-  }, [location.pathname, user])
+  }, [location.pathname, user, vocabs])
 
   return <Dropdown menu={{ items: menuItems }} placement="bottomRight" trigger={['click']}>
     <Button icon={<FontAwesomeIcon icon={faBars} />} />
