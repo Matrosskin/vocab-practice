@@ -28,20 +28,25 @@ export function FirebaseReadyProvider({ children }: PropsWithChildren) {
     }
 
     if (process.env.NODE_ENV !== 'production') {
-      fetch(`http://${window.location.hostname}:4400/emulators`)
-      .then((res) => res.json())
-      .then((data) => {
-        const auth = getAuth()
-        connectAuthEmulator(auth, `http://${window.location.hostname}:${data.auth.port}`, { disableWarnings: true })
+      // NOTE: Next hacks required to make firebase emulators workable over wepback proxy.
+      // So I can share only react app instance (port) without separate sharing of firebase services.
+      // For instance during developing in onlide ide (https://vscode.dev) each port has own tunnel name (domain name),
+      // so it is impossible to use them without hacks.
+      const auth = getAuth()
+      connectAuthEmulator(auth, `${window.location.protocol}//${window.location.host}`, { disableWarnings: true });
+      (auth.config as any).emulator.url += 'vp-auth/'
 
-        const db = getDatabase()
-        connectDatabaseEmulator(db, window.location.hostname, data.database.port)
 
-        whenFBReady()
-      })
-    } else {
-      whenFBReady()
+      const db = getDatabase()
+      connectDatabaseEmulator(db, window.location.host, 80) // Here any port will be fine, because it will be rewriten.
+      const repo = (db as any)._repoInternal;
+      const repoInfo = repo.repoInfo_;
+      repoInfo._host = `${window.location.host}/vp-database`
+      repoInfo._domain = 'localhost'
+      repoInfo.internalHost = repoInfo._host // Looks like this field (internalHost) used in requests to db.
+      repoInfo.secure = 'https:' === window.location.protocol
     }
+    whenFBReady()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

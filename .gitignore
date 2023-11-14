@@ -29,3 +29,4 @@ firebase-debug.log
 database-debug.log
 ui-debug.log
 src/misc/firebaseConfig.ts
+/test_data/*

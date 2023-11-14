@@ -17,6 +17,7 @@
     "antd": "^5.10.3",
     "classnames": "^2.3.2",
     "firebase": "^10.5.2",
+    "http-proxy-middleware": "^2.0.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.1.3",
@@ -28,6 +29,7 @@
   },
   "scripts": {
     "start": "firebase emulators:exec --only auth,database --export-on-exit ./test_data/ --import ./test_data/ 'npm run start:react2'",
+    "start:emulators": "firebase emulators:start --only auth,database --export-on-exit ./test_data/ --import ./test_data/",
     "start:react": "react-scripts start",
     "start:react2": "FORCE_COLOR=true react-scripts start | cat",
     "build": "react-scripts build",
