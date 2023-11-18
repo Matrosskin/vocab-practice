@@ -1,17 +1,16 @@
 import { useEffect, useRef, useState } from "react"
-import { useAppSelector } from "./store"
 import { getDatabase, onValue, ref } from "firebase/database"
 import { useBusy } from './useBusy'
+import { useUid } from './useUid'
 
 export interface IVocab {
   id: string,
   name: string,
-  isDefault?: boolean,
 }
 
 export const useVocabs = () => {
   const [vocabs, setVocabs] = useState<IVocab[]>([])
-  const uid = useAppSelector((state) => state.user.user?.uid)
+  const uid = useUid()
   const [, setIsBusy] = useBusy()
   const isFirstTimeRef = useRef<boolean>(true)
 
@@ -20,7 +19,10 @@ export const useVocabs = () => {
   }, [setIsBusy])
 
   useEffect(() => {
-    if (!uid) return
+    if (!uid) {
+      setVocabs([])
+      return
+    }
 
     const db = getDatabase()
     const vocabListRef = ref(db, `v-p-app-v1/users/${uid}/vocabs`)
@@ -36,7 +38,6 @@ export const useVocabs = () => {
         temporaryVocabs.push({
           id: vocabSnapshot.key!,
           name: val.name,
-          isDefault: val.isDefault,
         })
       })
       setVocabs(temporaryVocabs)

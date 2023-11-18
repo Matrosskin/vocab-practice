@@ -6,10 +6,11 @@ import s from './VocabListItem.module.scss'
 import { useCallback, useRef, useState } from 'react';
 import { VocabListItemNameInput } from '../VocabListItemNameInput/VocabListItemNameInput';
 import { child, getDatabase, push, ref, remove, set } from 'firebase/database';
-import { useAppSelector } from '../../hooks/store';
 import { useBusy } from '../../hooks/useBusy';
 import { useVocabItemMenu } from './useVocabItemMenu';
 import { VocabListItemNameLabel } from '../VocabListItemNameLabel/VocabListItemNameLabel';
+import { useUserSettings } from '../../hooks/useUserSettings';
+import { useUid } from '../../hooks/useUid';
 
 const ItemMenu = ({items} : { items: MenuProps['items'] }) => {
   return <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" arrow={{ pointAtCenter: true }}>
@@ -20,27 +21,26 @@ const ItemMenu = ({items} : { items: MenuProps['items'] }) => {
 interface IVocabListItemProps {
   vocab: IVocab
   index: number
-  isAlone: boolean
   onCancel: (id: string) => void
-  onSetDefault: (id: string) => void
 }
 
-export const VocabListItem = ({vocab, index, isAlone, onCancel, onSetDefault}: IVocabListItemProps) => {
-  const uid = useAppSelector((state) => state.user.user?.uid)
+export const VocabListItem = ({vocab, index, onCancel}: IVocabListItemProps) => {
+  const uid = useUid()
   const [isEditing, setIsEditing] = useState(!vocab.name)
   const [canBeSaved, setCanBeSaved] = useState(false)
   const [, setIsBusy] = useBusy()
   const nameRef = useRef<string>('')
+  const { defaultVocabId } = useUserSettings()
 
   const saveVocab = useCallback(() => {
     setIsBusy(true)
 
     const db = getDatabase()
     const vocabListRef = ref(db, `v-p-app-v1/users/${uid}/vocabs`)
-    const newVocabRef = vocab.id
+    const vocabRef = vocab.id
       ? child(vocabListRef, vocab.id)
       : push(vocabListRef)
-    set(newVocabRef, {
+    set(vocabRef, {
       name: nameRef.current
     }).finally(() => {
       setIsEditing(false)
@@ -62,7 +62,16 @@ export const VocabListItem = ({vocab, index, isAlone, onCancel, onSetDefault}: I
     })
   }, [setIsBusy, uid, vocab.id])
 
-  const setAsDefault = useCallback(() => onSetDefault(vocab.id), [onSetDefault, vocab.id])
+  const setAsDefault = useCallback(() => {
+    setIsBusy(true)
+
+    const db = getDatabase()
+    const defaultVocabIdRef = ref(db, `v-p-app-v1/users/${uid}/settings/defaultVocabId`)
+    set(defaultVocabIdRef, vocab.id)
+      .finally(() => {
+        setIsBusy(false)
+      })
+  }, [setIsBusy, uid, vocab.id])
 
   const cancelEditing = useCallback(() => {
     setIsEditing(false)
@@ -78,7 +87,7 @@ export const VocabListItem = ({vocab, index, isAlone, onCancel, onSetDefault}: I
     startEditing,
     setAsDefault,
     deleteVocab,
-    isDefault: !!vocab.isDefault,
+    isDefault: defaultVocabId === vocab.id,
   })
 
   const inputOrLabel = isEditing
