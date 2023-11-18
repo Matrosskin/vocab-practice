@@ -17,24 +17,26 @@ export const HeaderDropdownMenu = () => {
   const menuItems = useMemo((): MenuProps['items'] => {
     return [
       ...insertAIf<ItemType>(
-        Boolean(user && vocabs.length),
+        Boolean(user && vocabs.length > 1),
         {
           key: 'vocabs',
           type: 'group',
           label: 'Your vocabs:',
           children: vocabs.map(({id, name}) => ({
             key: `vocab-item-${id}`,
-            label: name
+            label: <Link to={`/vocab/${id}`}>{name}</Link>
           }))
-        }
+        },
+        {
+          type: 'divider'
+        },
       ),
       ...insertAIf<ItemType>(
         Boolean(user),
         {
-          key: 'createVocab',
+          key: 'goToSettings',
           label: (
-            // TODO: It seems it would be better to move this item into settings page or so.
-            <Link to={`/create-vocab`}>Create vocab</Link>
+            <Link to={`/settings`}>Settings</Link>
           ),
         },
         {

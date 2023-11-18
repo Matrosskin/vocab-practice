@@ -4,7 +4,8 @@ import { LoginPage } from '../pages/user/LoginPage/LoginPage'
 import { RegistrationPage } from '../pages/user/RegistrationPage/RegistrationPage'
 import { VocabPage } from '../pages/VocabPage/VocabPage'
 import { LogoutPage } from "../pages/user/LogoutPage/LogoutPage"
-import { CreateVocabPage } from "../pages/CreateVocabPage/CreateVocabPage"
+import { SettingsPage } from '../pages/settings/SettingsPage/SettingsPage'
+import { ManageVocabsPage } from '../pages/settings/ManageVocabsPage/ManageVocabsPage'
 
 export const routerConfig: RouteObject[] = [
     {
@@ -28,8 +29,21 @@ export const routerConfig: RouteObject[] = [
             element: <VocabPage />
           },
           {
-            path: 'create-vocab',
-            element: <CreateVocabPage />
+            path: 'vocab/:vocabId',
+            element: <VocabPage />
+          },
+          {
+            path: 'settings',
+            children: [
+              {
+                path: '',
+                element: <SettingsPage />
+              },
+              {
+                path: 'vocabs',
+                element: <ManageVocabsPage />
+              },
+            ]
           }
         ]
     },
