@@ -7,6 +7,7 @@ import { LogoutPage } from '../pages/user/LogoutPage/LogoutPage'
 import { SettingsPage } from '../pages/settings/SettingsPage/SettingsPage'
 import { ManageVocabsPage } from '../pages/settings/ManageVocabsPage/ManageVocabsPage'
 import { EditRecord } from '../pages/EditRecord/EditRecord'
+import { RandomCardPage } from '../pages/practicing/RandomCardPage/RandomCardPage'
 
 export const routerConfig: RouteObject[] = [
   {
@@ -43,6 +44,15 @@ export const routerConfig: RouteObject[] = [
           {
             path: ':vocabId/:recordId',
             element: <EditRecord />,
+          },
+        ],
+      },
+      {
+        path: 'practicing',
+        children: [
+          {
+            path: 'random-card/:vocabId',
+            element: <RandomCardPage />,
           },
         ],
       },

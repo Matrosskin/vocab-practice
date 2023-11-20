@@ -1,0 +1,43 @@
+.cardContainer {
+  height: calc(100vh - 64px - 20px);
+  --fontSizeMultiplier: 1;
+}
+
+.moreThan10 {
+  --fontSizeMultiplier: .9;
+}
+
+.moreThan20 {
+  --fontSizeMultiplier: .7;
+}
+
+.moreThan40 {
+  --fontSizeMultiplier: .5;
+}
+
+.wordContainer,
+.translationContainer,
+.descriptionContainer {
+  --basic-font-size: calc(14vmin * var(--fontSizeMultiplier, 1));
+  flex: 1 1 auto;
+  width: 100%;
+  text-align: center;
+}
+.wordContainer {
+  font-size: var(--basic-font-size);
+  word-break: break-all;
+}
+.translationContainer {
+  font-size: calc(var(--basic-font-size) * 0.9);
+  word-break: break-all;
+}
+.descriptionContainer {
+  font-size: calc(var(--basic-font-size) * 0.7);
+}
+
+.actionsContainer {
+  flex: 0 0 64px;
+  width: 100%;
+  max-width: 500px;
+  flex-direction: row-reverse;
+}

@@ -28,6 +28,32 @@ export const HeaderDropdownMenu = () => {
         }
       ),
       ...insertAIf<ItemType>(
+        Boolean(user && vocabs.length === 1 && !new RegExp('^/vocab.*$').test(location.pathname)),
+        {
+          key: 'home',
+          label: <Link to={`/vocab/${openedVocabId}`}>Vocabulary</Link>,
+        },
+        {
+          type: 'divider',
+        }
+      ),
+      ...insertAIf<ItemType>(
+        Boolean(user && vocabs.length && openedVocabId),
+        {
+          key: 'practices',
+          label: 'Practices',
+          children: [
+            {
+              key: 'randomCards',
+              label: <Link to={`/practicing/random-card/${openedVocabId}`}>Open random card</Link>,
+            },
+          ],
+        },
+        {
+          type: 'divider',
+        }
+      ),
+      ...insertAIf<ItemType>(
         Boolean(user && vocabs.length > 1),
         {
           key: 'vocabs',
