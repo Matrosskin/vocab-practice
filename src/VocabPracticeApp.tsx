@@ -4,7 +4,7 @@ import s from './VocabPracticeApp.module.scss'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useAppSelector } from './hooks/store'
 import { useEffect } from 'react'
-import { HeaderDropdownMenu } from "./components/HeaderDropdownMenu/HeaderDropdownMenu"
+import { HeaderDropdownMenu } from './components/HeaderDropdownMenu/HeaderDropdownMenu'
 import { useBusy } from './hooks/useBusy'
 
 export function VocabPracticeApp() {
@@ -30,7 +30,7 @@ export function VocabPracticeApp() {
   }, [isDetermined, location.pathname, navigate, setIsBusy, user])
 
   return (
-    <ConfigProvider >
+    <ConfigProvider>
       <App>
         <Spin spinning={isBusy} size='large' tip='Loading...'>
           <Layout className={s.mainLayout}>

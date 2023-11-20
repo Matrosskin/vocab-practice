@@ -3,48 +3,58 @@ import { VocabPracticeApp } from '../VocabPracticeApp'
 import { LoginPage } from '../pages/user/LoginPage/LoginPage'
 import { RegistrationPage } from '../pages/user/RegistrationPage/RegistrationPage'
 import { VocabPage } from '../pages/VocabPage/VocabPage'
-import { LogoutPage } from "../pages/user/LogoutPage/LogoutPage"
+import { LogoutPage } from '../pages/user/LogoutPage/LogoutPage'
 import { SettingsPage } from '../pages/settings/SettingsPage/SettingsPage'
 import { ManageVocabsPage } from '../pages/settings/ManageVocabsPage/ManageVocabsPage'
+import { CreateRecord } from '../pages/CreateRecord/CreateRecord'
 
 export const routerConfig: RouteObject[] = [
-    {
-        path: '/',
-        element: <VocabPracticeApp />,
+  {
+    path: '/',
+    element: <VocabPracticeApp />,
+    children: [
+      {
+        path: 'login',
+        element: <LoginPage />,
+      },
+      {
+        path: 'logout',
+        element: <LogoutPage />,
+      },
+      {
+        path: 'registration',
+        element: <RegistrationPage />,
+      },
+      {
+        path: 'vocab',
         children: [
           {
-            path: 'login',
-            element: <LoginPage />
+            path: '',
+            element: <VocabPage />,
           },
           {
-            path: 'logout',
-            element: <LogoutPage />
+            path: ':vocabId',
+            element: <VocabPage />,
           },
           {
-            path: 'registration',
-            element: <RegistrationPage />
+            path: ':vocabId/new-word',
+            element: <CreateRecord />,
+          },
+        ],
+      },
+      {
+        path: 'settings',
+        children: [
+          {
+            path: '',
+            element: <SettingsPage />,
           },
           {
-            path: 'vocab',
-            element: <VocabPage />
+            path: 'vocabs',
+            element: <ManageVocabsPage />,
           },
-          {
-            path: 'vocab/:vocabId',
-            element: <VocabPage />
-          },
-          {
-            path: 'settings',
-            children: [
-              {
-                path: '',
-                element: <SettingsPage />
-              },
-              {
-                path: 'vocabs',
-                element: <ManageVocabsPage />
-              },
-            ]
-          }
-        ]
-    },
+        ],
+      },
+    ],
+  },
 ]
