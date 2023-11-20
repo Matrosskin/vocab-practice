@@ -1,21 +1,25 @@
-import { Button, Dropdown, List, MenuProps } from 'antd';
-import { IVocab } from '../../hooks/useVocabs';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
+import { Button, Dropdown, List, MenuProps } from 'antd'
+import { IVocab } from '../../hooks/useVocabs'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEllipsis } from '@fortawesome/free-solid-svg-icons'
 import s from './VocabListItem.module.scss'
-import { useCallback, useRef, useState } from 'react';
-import { VocabListItemNameInput } from '../VocabListItemNameInput/VocabListItemNameInput';
-import { child, getDatabase, push, ref, remove, set } from 'firebase/database';
-import { useBusy } from '../../hooks/useBusy';
-import { useVocabItemMenu } from './useVocabItemMenu';
-import { VocabListItemNameLabel } from '../VocabListItemNameLabel/VocabListItemNameLabel';
-import { useUserSettings } from '../../hooks/useUserSettings';
-import { useUid } from '../../hooks/useUid';
+import { useCallback, useRef, useState } from 'react'
+import { VocabListItemNameInput } from '../VocabListItemNameInput/VocabListItemNameInput'
+import { child, getDatabase, push, ref, remove, set } from 'firebase/database'
+import { useBusy } from '../../hooks/useBusy'
+import { useVocabItemMenu } from './useVocabItemMenu'
+import { VocabListItemNameLabel } from '../VocabListItemNameLabel/VocabListItemNameLabel'
+import { useUserSettings } from '../../hooks/useUserSettings'
+import { useUid } from '../../hooks/useUid'
 
-const ItemMenu = ({items} : { items: MenuProps['items'] }) => {
-  return <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" arrow={{ pointAtCenter: true }}>
-    <Button type='text' size='small'><FontAwesomeIcon icon={faEllipsis} /></Button>
-  </Dropdown>
+const ItemMenu = ({ items }: { items: MenuProps['items'] }) => {
+  return (
+    <Dropdown menu={{ items }} trigger={['click']} placement='bottomRight' arrow={{ pointAtCenter: true }}>
+      <Button type='text' size='small'>
+        <FontAwesomeIcon icon={faEllipsis} />
+      </Button>
+    </Dropdown>
+  )
 }
 
 interface IVocabListItemProps {
@@ -24,7 +28,7 @@ interface IVocabListItemProps {
   onCancel: (id: string) => void
 }
 
-export const VocabListItem = ({vocab, index, onCancel}: IVocabListItemProps) => {
+export const VocabListItem = ({ vocab, index, onCancel }: IVocabListItemProps) => {
   const uid = useUid()
   const [isEditing, setIsEditing] = useState(!vocab.name)
   const [canBeSaved, setCanBeSaved] = useState(false)
@@ -37,11 +41,9 @@ export const VocabListItem = ({vocab, index, onCancel}: IVocabListItemProps) => 
 
     const db = getDatabase()
     const vocabListRef = ref(db, `v-p-app-v1/users/${uid}/vocabs`)
-    const vocabRef = vocab.id
-      ? child(vocabListRef, vocab.id)
-      : push(vocabListRef)
+    const vocabRef = vocab.id ? child(vocabListRef, vocab.id) : push(vocabListRef)
     set(vocabRef, {
-      name: nameRef.current
+      name: nameRef.current,
     }).finally(() => {
       setIsEditing(false)
       setIsBusy(false)
@@ -67,10 +69,9 @@ export const VocabListItem = ({vocab, index, onCancel}: IVocabListItemProps) => 
 
     const db = getDatabase()
     const defaultVocabIdRef = ref(db, `v-p-app-v1/users/${uid}/settings/defaultVocabId`)
-    set(defaultVocabIdRef, vocab.id)
-      .finally(() => {
-        setIsBusy(false)
-      })
+    set(defaultVocabIdRef, vocab.id).finally(() => {
+      setIsBusy(false)
+    })
   }, [setIsBusy, uid, vocab.id])
 
   const cancelEditing = useCallback(() => {
@@ -90,13 +91,18 @@ export const VocabListItem = ({vocab, index, onCancel}: IVocabListItemProps) => 
     isDefault: defaultVocabId === vocab.id,
   })
 
-  const inputOrLabel = isEditing
-    ? <VocabListItemNameInput nameRef={nameRef} vocab={vocab} onValidityChange={setCanBeSaved} onPressEnter={saveVocab} />
-    : <VocabListItemNameLabel vocab={vocab} />
+  const inputOrLabel = isEditing ? (
+    <VocabListItemNameInput nameRef={nameRef} vocab={vocab} onValidityChange={setCanBeSaved} onPressEnter={saveVocab} />
+  ) : (
+    <VocabListItemNameLabel vocab={vocab} />
+  )
 
-  return <List.Item actions={[<ItemMenu items={menuItems} />]}>
-    <div className={s.listItem} onDoubleClick={startEditing}>
-      <span>{index + 1}.&nbsp;</span>{inputOrLabel}
-    </div>
-  </List.Item>
+  return (
+    <List.Item actions={[<ItemMenu items={menuItems} />]}>
+      <div className={s.listItem} onDoubleClick={startEditing}>
+        <span>{index + 1}.&nbsp;</span>
+        {inputOrLabel}
+      </div>
+    </List.Item>
+  )
 }

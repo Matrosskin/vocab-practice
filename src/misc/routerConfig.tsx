@@ -6,7 +6,7 @@ import { VocabPage } from '../pages/VocabPage/VocabPage'
 import { LogoutPage } from '../pages/user/LogoutPage/LogoutPage'
 import { SettingsPage } from '../pages/settings/SettingsPage/SettingsPage'
 import { ManageVocabsPage } from '../pages/settings/ManageVocabsPage/ManageVocabsPage'
-import { CreateRecord } from '../pages/CreateRecord/CreateRecord'
+import { EditRecord } from '../pages/EditRecord/EditRecord'
 
 export const routerConfig: RouteObject[] = [
   {
@@ -38,7 +38,11 @@ export const routerConfig: RouteObject[] = [
           },
           {
             path: ':vocabId/new-word',
-            element: <CreateRecord />,
+            element: <EditRecord />,
+          },
+          {
+            path: ':vocabId/:recordId',
+            element: <EditRecord />,
           },
         ],
       },

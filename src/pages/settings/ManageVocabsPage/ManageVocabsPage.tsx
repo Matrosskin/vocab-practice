@@ -22,36 +22,36 @@ export const ManageVocabsPage = () => {
     const newVocab = vocabList.find((vocab) => !vocab.name)
     if (newVocab) return
 
-    setVocabList([
-      ...vocabList,
-      {id: '', name: ''},
-    ])
+    setVocabList([...vocabList, { id: '', name: '' }])
   }, [vocabList])
 
-  const onCancelEditing = useCallback((id: string) => {
-    if (id) return
+  const onCancelEditing = useCallback(
+    (id: string) => {
+      if (id) return
 
-    setVocabList(vocabList.filter(({id}) => id))
-  }, [vocabList])
+      setVocabList(vocabList.filter(({ id }) => id))
+    },
+    [vocabList]
+  )
 
-  return <Layout>
-    <Content>
-      <Title level={3}>Your vocabs ({defaultV?.name})</Title>
+  return (
+    <Layout>
+      <Content>
+        <Title level={3}>Your vocabs ({defaultV?.name})</Title>
 
-      <List
-        bordered
-        dataSource={vocabList}
-        renderItem={(item, index) => (
-          <VocabListItem key={index} vocab={item} index={index} onCancel={onCancelEditing} />
-        )}
-        footer={
-          <div>
-            <Button className={s.createVocabBtn} type='text' onClick={onCreateVocab}>
-              <FontAwesomeIcon icon={faPlus} />
-            </Button>
-          </div>
-        }
-      />
-    </Content>
-  </Layout>
+        <List
+          bordered
+          dataSource={vocabList}
+          renderItem={(item, index) => <VocabListItem key={index} vocab={item} index={index} onCancel={onCancelEditing} />}
+          footer={
+            <div>
+              <Button className={s.createVocabBtn} type='text' onClick={onCreateVocab}>
+                <FontAwesomeIcon icon={faPlus} />
+              </Button>
+            </div>
+          }
+        />
+      </Content>
+    </Layout>
+  )
 }

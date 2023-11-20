@@ -1,14 +1,16 @@
-import { faArrowRightArrowLeft, faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
+import { faArrowRightArrowLeft, faChevronDown, faChevronUp, faPencil } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, Flex, Space, Typography, theme } from 'antd'
 import { IRecord } from '../../interfaces/IRecord'
 import { useCallback, useState } from 'react'
 import s from './RecordListItem.module.scss'
+import { Link } from 'react-router-dom'
 
 interface IRecordListItemProps {
   record: IRecord
+  vocabId: string
 }
-export const RecordListItem = ({ record }: IRecordListItemProps) => {
+export const RecordListItem = ({ record, vocabId }: IRecordListItemProps) => {
   const [isExpanded, setIsExpanded] = useState(false)
 
   const {
@@ -27,6 +29,7 @@ export const RecordListItem = ({ record }: IRecordListItemProps) => {
       style={{
         borderBlockEnd: `1px solid ${colorSplit}`,
       }}
+      onClick={toggleDescription}
     >
       <Space direction='vertical'>
         <Space>
@@ -44,11 +47,18 @@ export const RecordListItem = ({ record }: IRecordListItemProps) => {
         {Boolean(record.description) && isExpanded && <Typography.Text type='secondary'>{record.description}</Typography.Text>}
       </Space>
 
-      {Boolean(record.description) && (
-        <Button type='text' size='small' onClick={toggleDescription}>
-          <FontAwesomeIcon icon={isExpanded ? faChevronUp : faChevronDown} />
-        </Button>
-      )}
+      <div className={s.actionsContainer}>
+        {Boolean(record.description) && (
+          <>
+            <Button type='text' size='small'>
+              <FontAwesomeIcon icon={isExpanded ? faChevronUp : faChevronDown} />
+            </Button>
+          </>
+        )}
+        <Link to={`/vocab/${vocabId}/${record.id}`} className={s.linkLikeButton} onClick={(e) => e.stopPropagation()}>
+          <FontAwesomeIcon icon={faPencil} />
+        </Link>
+      </div>
     </Flex>
   )
 }

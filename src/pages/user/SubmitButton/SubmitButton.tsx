@@ -1,7 +1,12 @@
 import { Button, Form, FormInstance } from 'antd'
 import { PropsWithChildren, useEffect, useState } from 'react'
 
-export const SubmitButton = ({ form, loading, children }: PropsWithChildren<{ form: FormInstance, loading: boolean }>) => {
+interface ISubmitButtonProps {
+  form: FormInstance
+  loading?: boolean
+}
+
+export const SubmitButton = ({ form, loading, children }: PropsWithChildren<ISubmitButtonProps>) => {
   const [submittable, setSubmittable] = useState(false)
 
   const values = Form.useWatch([], form)
@@ -13,12 +18,12 @@ export const SubmitButton = ({ form, loading, children }: PropsWithChildren<{ fo
       },
       () => {
         setSubmittable(false)
-      },
+      }
     )
   }, [form, values])
 
   return (
-    <Button type="primary" htmlType="submit" disabled={!submittable} loading={loading}>
+    <Button type='primary' htmlType='submit' disabled={!submittable} loading={loading}>
       {children}
     </Button>
   )
