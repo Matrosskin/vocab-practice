@@ -48,6 +48,8 @@ export const RandomCardPage = () => {
   return (
     <Flex
       className={cn(s.cardContainer, {
+        [s.moreThan2]: currentCard.word.length > 2,
+        [s.moreThan5]: currentCard.word.length > 5,
         [s.moreThan10]: currentCard.word.length > 10,
         [s.moreThan20]: currentCard.word.length > 20,
         [s.moreThan40]: currentCard.word.length > 40,

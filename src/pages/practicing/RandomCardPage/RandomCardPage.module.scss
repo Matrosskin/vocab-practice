@@ -1,5 +1,13 @@
 .cardContainer {
   height: calc(100vh - 64px - 20px);
+  --fontSizeMultiplier: 3;
+}
+
+.moreThan2 {
+  --fontSizeMultiplier: 2;
+}
+
+.moreThan5 {
   --fontSizeMultiplier: 1;
 }
 
