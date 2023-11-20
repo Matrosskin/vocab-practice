@@ -4,6 +4,9 @@ import { useState } from 'react'
 import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
 import s from './RegistrationPage.module.scss'
 import { SubmitButton } from '../SubmitButton/SubmitButton'
+import { GoogleButton } from '../../../components/GoogleButton/GoogleButton'
+import { useBusy } from '../../../hooks/useBusy'
+import { getDatabase, push, ref, set } from 'firebase/database'
 
 type FieldType = {
   email?: string
@@ -16,11 +19,25 @@ export function RegistrationPage() {
   const [form] = Form.useForm()
   const [isInProgress, setInProgress] = useState(false)
   const [regError, setRegError] = useState<{ code: string; message: string } | null>(null)
+  const [, setIsBusy] = useBusy()
 
   const onFinish = (values: FieldType) => {
     setInProgress(true)
     setRegError(null)
     createUserWithEmailAndPassword(getAuth(), values.email!, values.password!)
+      .then((result) => {
+        setIsBusy(true)
+
+        const uid = result.user.uid
+        const db = getDatabase()
+        const vocabListRef = ref(db, `v-p-app-v1/users/${uid}/vocabs`)
+        const vocabRef = push(vocabListRef)
+        set(vocabRef, {
+          name: 'Your vocabulary',
+        }).finally(() => {
+          setIsBusy(false)
+        })
+      })
       .catch((error) => {
         if (['auth/email-already-in-use', 'auth/invalid-email', 'auth/operation-not-allowed', 'auth/weak-password'].indexOf(error.code) !== -1) {
           setRegError({
@@ -103,6 +120,7 @@ export function RegistrationPage() {
               <Button htmlType='button' onClick={onGoToLogin}>
                 Login
               </Button>
+              <GoogleButton />
             </div>
           </Form.Item>
         </Form>
