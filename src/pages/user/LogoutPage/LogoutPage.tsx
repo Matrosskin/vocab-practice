@@ -1,6 +1,6 @@
-import { getAuth, signOut } from "firebase/auth"
-import { useEffect } from "react"
-import { useAppSelector } from "../../../hooks/store"
+import { getAuth, signOut } from 'firebase/auth'
+import { useEffect } from 'react'
+import { useAppSelector } from '../../../hooks/store'
 
 export const LogoutPage = () => {
   const user = useAppSelector((state) => state.user.user)
@@ -11,7 +11,5 @@ export const LogoutPage = () => {
     signOut(getAuth())
   }, [user])
 
-  return <div>
-    You are logged out.
-  </div>
+  return <div>You are logged out.</div>
 }

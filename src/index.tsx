@@ -8,9 +8,7 @@ import { store } from './misc/store'
 
 const router = createBrowserRouter(routerConfig)
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-)
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <Provider store={store}>
     <FirebaseReadyProvider>

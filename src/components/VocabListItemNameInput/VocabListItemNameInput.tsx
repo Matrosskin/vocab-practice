@@ -14,7 +14,7 @@ interface IVocabListItemNameInputProps {
   onPressEnter: () => void
 }
 
-export const VocabListItemNameInput = ({vocab, onValidityChange, nameRef, onPressEnter}: IVocabListItemNameInputProps) => {
+export const VocabListItemNameInput = ({ vocab, onValidityChange, nameRef, onPressEnter }: IVocabListItemNameInputProps) => {
   const [form] = Form.useForm<FieldType>()
   const [isValid, setIsValid] = useState(false)
 
@@ -28,7 +28,7 @@ export const VocabListItemNameInput = ({vocab, onValidityChange, nameRef, onPres
       },
       () => {
         setIsValid(false)
-      },
+      }
     )
   }, [form, nameRef, values])
 
@@ -36,23 +36,25 @@ export const VocabListItemNameInput = ({vocab, onValidityChange, nameRef, onPres
     onValidityChange(isValid)
   }, [isValid, onValidityChange])
 
-  return <Form
-    form={form}
-    name="basic"
-    autoComplete="off"
-    layout='inline'
-    size='small'
-    className={s.itemLabel}
-    wrapperCol={{ span: 24 }}
-    initialValues={{itemName: vocab.name}}
-  >
-    <Form.Item<FieldType>
-      name="itemName"
+  return (
+    <Form
+      form={form}
+      name='basic'
+      autoComplete='off'
+      layout='inline'
+      size='small'
+      className={s.itemLabel}
       wrapperCol={{ span: 24 }}
-      className={s.itemInput}
-      rules={[{ required: true, message: 'Please input your e-mail!' }]}
+      initialValues={{ itemName: vocab.name }}
     >
-      <Input placeholder="Vocab name" onPressEnter={onPressEnter} />
-    </Form.Item>
-  </Form>
+      <Form.Item<FieldType>
+        name='itemName'
+        wrapperCol={{ span: 24 }}
+        className={s.itemInput}
+        rules={[{ required: true, message: 'Please input your e-mail!' }]}
+      >
+        <Input placeholder='Vocab name' onPressEnter={onPressEnter} />
+      </Form.Item>
+    </Form>
+  )
 }

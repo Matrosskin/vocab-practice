@@ -1,6 +1,6 @@
-import { ItemType } from 'antd/es/menu/hooks/useItems';
+import { ItemType } from 'antd/es/menu/hooks/useItems'
 import { insertAIf } from '../../utils/insertAIf'
-import { useVocabs } from '../../hooks/useVocabs';
+import { useVocabs } from '../../hooks/useVocabs'
 
 interface IuseVocabItemMenuProps {
   isEditing: boolean
@@ -22,7 +22,7 @@ export const useVocabItemMenu = ({
   startEditing,
   setAsDefault,
   deleteVocab,
-  isDefault
+  isDefault,
 }: IuseVocabItemMenuProps) => {
   const vocabs = useVocabs()
   const isAlone = vocabs?.length === 1
@@ -34,37 +34,28 @@ export const useVocabItemMenu = ({
         key: 'save',
         label: 'Save',
         disabled: !canBeSaved,
-        onClick: saveVocab
+        onClick: saveVocab,
       },
       {
         key: 'cancel',
         label: 'Cancel',
-        onClick: cancelEditing
+        onClick: cancelEditing,
       }
     ),
-    ...insertAIf<ItemType>(
-      isExistedVocab && !isEditing,
-      {
-        key: 'edit',
-        label: 'Edit',
-        onClick: startEditing
-      },
-    ),
-    ...insertAIf<ItemType>(
-      isExistedVocab && !isEditing && !isDefault,
-      {
-        key: 'setDefault',
-        label: 'Set as default',
-        onClick: setAsDefault,
-      },
-    ),
-    ...insertAIf<ItemType>(
-      isExistedVocab && !isEditing && !isAlone,
-      {
-        key: 'remove',
-        label: 'Remove',
-        onClick: deleteVocab
-      }
-    ),
+    ...insertAIf<ItemType>(isExistedVocab && !isEditing, {
+      key: 'edit',
+      label: 'Edit',
+      onClick: startEditing,
+    }),
+    ...insertAIf<ItemType>(isExistedVocab && !isEditing && !isDefault, {
+      key: 'setDefault',
+      label: 'Set as default',
+      onClick: setAsDefault,
+    }),
+    ...insertAIf<ItemType>(isExistedVocab && !isEditing && !isAlone, {
+      key: 'remove',
+      label: 'Remove',
+      onClick: deleteVocab,
+    }),
   ]
 }
