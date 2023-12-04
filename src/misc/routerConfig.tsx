@@ -8,6 +8,7 @@ import { SettingsPage } from '../pages/settings/SettingsPage/SettingsPage'
 import { ManageVocabsPage } from '../pages/settings/ManageVocabsPage/ManageVocabsPage'
 import { EditRecord } from '../pages/EditRecord/EditRecord'
 import { RandomCardPage } from '../pages/practicing/RandomCardPage/RandomCardPage'
+import { BuildWordPage } from '../pages/practicing/BuildWordPage/BuildWordPage'
 
 export const routerConfig: RouteObject[] = [
   {
@@ -53,6 +54,10 @@ export const routerConfig: RouteObject[] = [
           {
             path: 'random-card/:vocabId',
             element: <RandomCardPage />,
+          },
+          {
+            path: 'build-word/:vocabId',
+            element: <BuildWordPage />,
           },
         ],
       },

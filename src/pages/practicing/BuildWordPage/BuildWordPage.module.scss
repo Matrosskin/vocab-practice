@@ -1,0 +1,49 @@
+.cardContainer {
+  height: calc(100vh - 64px - 20px);
+  --fontSizeMultiplier: 3;
+}
+
+.moreThan2 {
+  --fontSizeMultiplier: 2;
+}
+
+.moreThan5 {
+  --fontSizeMultiplier: 1;
+}
+
+.moreThan10 {
+  --fontSizeMultiplier: .9;
+}
+
+.moreThan20 {
+  --fontSizeMultiplier: .7;
+}
+
+.moreThan40 {
+  --fontSizeMultiplier: .5;
+}
+
+.cardContent {
+  cursor: pointer;
+}
+
+.wordContainer {
+  flex: 1 1 auto;
+  width: 100%;
+  text-align: center;
+  font-size: calc(14vmin * var(--fontSizeMultiplier, 1));
+  word-break: break-all;
+}
+
+.builtWordContainer {
+  font-size: calc(14vmin * var(--fontSizeMultiplier, 1) * 0.5);
+  min-height: 1.7em;
+}
+
+.builtWord {
+  font-size: calc(14vmin * var(--fontSizeMultiplier, 1) * 0.5);
+}
+
+.shuffledLettersContainer {
+  flex: 1;
+}

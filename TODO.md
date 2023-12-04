@@ -13,4 +13,5 @@
  - [ ] Auto check if new word is already in the list during typing of it in creation form.
  - [x] Trim values before saving.
  - [ ] Make practices optional per vocab. (enable/disable in settings)
- - [ ] Practice by showing of translation or description and proposing shuffled letters of main work, so user should order them properly.
+ - [x] Practice by showing of translation or description and proposing shuffled letters of main work, so user should order them properly.
+   - [ ] Currently shown "translation" value, but probably it make sense to show description, as it might be more informative... Or visibility of letters is enough... At list choosing of preferred value can be implemented as settings option.

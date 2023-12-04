@@ -4,7 +4,7 @@ import { useBusy } from './useBusy'
 import { useUid } from './useUid'
 import { IRecord } from '../interfaces/IRecord'
 
-export const useRecords = (vocabId?: string) => {
+export const useRecords = (vocabId?: string, { withTranslation } = { withTranslation: false }) => {
   const [records, setRecords] = useState<IRecord[]>([])
   const uid = useUid()
   const { setIsBusy } = useBusy()
@@ -48,6 +48,9 @@ export const useRecords = (vocabId?: string) => {
             description: val.description,
           })
         })
+        if (withTranslation) {
+          temporaryRecords = temporaryRecords.filter((record) => Boolean(record.translation))
+        }
         setRecords(temporaryRecords)
       },
       () => {
@@ -57,7 +60,7 @@ export const useRecords = (vocabId?: string) => {
         }
       }
     )
-  }, [setIsBusy, uid, vocabId])
+  }, [setIsBusy, uid, vocabId, withTranslation])
 
   return records
 }

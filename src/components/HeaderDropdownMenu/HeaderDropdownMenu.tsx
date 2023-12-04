@@ -47,6 +47,10 @@ export const HeaderDropdownMenu = () => {
               key: 'randomCards',
               label: <Link to={`/practicing/random-card/${openedVocabId}`}>Open random card</Link>,
             },
+            {
+              key: 'buildWord',
+              label: <Link to={`/practicing/build-word/${openedVocabId}`}>Build word</Link>,
+            },
           ],
         },
         {
