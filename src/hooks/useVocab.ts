@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useUserSettings } from './useUserSettings'
-import { IVocab, useVocabs } from './useVocabs'
+import { useVocabs } from './useVocabs'
 import { useParams } from 'react-router-dom'
+import { IVocab } from '../interfaces/IVocab'
 
 export const useVocab = () => {
   const vocabs = useVocabs()

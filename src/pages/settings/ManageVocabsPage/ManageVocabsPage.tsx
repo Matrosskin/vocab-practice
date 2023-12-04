@@ -1,13 +1,14 @@
 import { Button, Layout, List } from 'antd'
 import { Content } from 'antd/es/layout/layout'
 import Title from 'antd/es/typography/Title'
-import { IVocab, useVocabs } from '../../../hooks/useVocabs'
+import { useVocabs } from '../../../hooks/useVocabs'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import s from './ManageVocabsPage.module.scss'
 import { useCallback, useEffect, useState } from 'react'
 import { VocabListItem } from '../../../components/VocabListItem/VocabListItem'
 import { useVocab } from '../../../hooks/useVocab'
+import { IVocab } from '../../../interfaces/IVocab'
 
 export const ManageVocabsPage = () => {
   const vocabs = useVocabs()

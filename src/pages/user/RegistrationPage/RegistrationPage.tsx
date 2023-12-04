@@ -19,7 +19,7 @@ export function RegistrationPage() {
   const [form] = Form.useForm()
   const [isInProgress, setInProgress] = useState(false)
   const [regError, setRegError] = useState<{ code: string; message: string } | null>(null)
-  const [, setIsBusy] = useBusy()
+  const { setIsBusy } = useBusy()
 
   const onFinish = (values: FieldType) => {
     setInProgress(true)

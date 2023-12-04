@@ -33,6 +33,7 @@
     "start:react": "react-scripts start",
     "start:react2": "FORCE_COLOR=true react-scripts start | cat",
     "build": "react-scripts build",
+    "deploy": "firebase deploy",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

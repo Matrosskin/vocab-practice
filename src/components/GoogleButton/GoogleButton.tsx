@@ -5,7 +5,7 @@ import { useBusy } from '../../hooks/useBusy'
 import { getDatabase, push, ref, set } from 'firebase/database'
 
 export const GoogleButton = () => {
-  const [, setIsBusy] = useBusy()
+  const { setIsBusy } = useBusy()
 
   const onLoginWithGoogle = () => {
     const provider = new GoogleAuthProvider()

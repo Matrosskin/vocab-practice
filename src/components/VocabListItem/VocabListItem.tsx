@@ -1,5 +1,4 @@
 import { Button, Dropdown, List, MenuProps } from 'antd'
-import { IVocab } from '../../hooks/useVocabs'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons'
 import s from './VocabListItem.module.scss'
@@ -11,6 +10,7 @@ import { useVocabItemMenu } from './useVocabItemMenu'
 import { VocabListItemNameLabel } from '../VocabListItemNameLabel/VocabListItemNameLabel'
 import { useUserSettings } from '../../hooks/useUserSettings'
 import { useUid } from '../../hooks/useUid'
+import { IVocab } from '../../interfaces/IVocab'
 
 const ItemMenu = ({ items }: { items: MenuProps['items'] }) => {
   return (
@@ -32,7 +32,7 @@ export const VocabListItem = ({ vocab, index, onCancel }: IVocabListItemProps) =
   const uid = useUid()
   const [isEditing, setIsEditing] = useState(!vocab.name)
   const [canBeSaved, setCanBeSaved] = useState(false)
-  const [, setIsBusy] = useBusy()
+  const { setIsBusy } = useBusy()
   const nameRef = useRef<string>('')
   const { defaultVocabId } = useUserSettings()
 

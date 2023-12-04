@@ -7,7 +7,7 @@ import { IRecord } from '../interfaces/IRecord'
 export const useRecord = (vocabId: string, recordId?: string) => {
   const [record, setRecord] = useState<IRecord | null>()
   const uid = useUid()
-  const [, setIsBusy] = useBusy()
+  const { setIsBusy } = useBusy()
   const isFirstTimeRef = useRef<boolean>(true)
 
   useEffect(() => {

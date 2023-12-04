@@ -1,10 +1,10 @@
 import { Typography } from 'antd'
-import { IVocab } from '../../hooks/useVocabs'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
 import s from './VocabListItemNameLabel.module.scss'
 import { useUserSettings } from '../../hooks/useUserSettings'
+import { IVocab } from '../../interfaces/IVocab'
 
 export const VocabListItemNameLabel = ({ vocab }: { vocab: IVocab }) => {
   const { defaultVocabId } = useUserSettings()

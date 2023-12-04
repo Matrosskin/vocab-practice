@@ -1,7 +1,7 @@
 import { Form, Input } from 'antd'
-import { IVocab } from '../../hooks/useVocabs'
 import { MutableRefObject, useEffect, useState } from 'react'
 import s from './VocabListItemNameInput.module.scss'
+import { IVocab } from '../../interfaces/IVocab'
 
 type FieldType = {
   itemName: string

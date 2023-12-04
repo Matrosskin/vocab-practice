@@ -6,13 +6,16 @@ import { useAppSelector } from './hooks/store'
 import { useEffect } from 'react'
 import { HeaderDropdownMenu } from './components/HeaderDropdownMenu/HeaderDropdownMenu'
 import { useBusy } from './hooks/useBusy'
+import { useListenerOfVocabs } from './hooks/useListenerOfVocabs'
 
 export function VocabPracticeApp() {
   const isDetermined = useAppSelector((state) => state.user.isDetermined)
   const user = useAppSelector((state) => state.user.user)
+  const isBusy = useAppSelector((state) => state.app.isBusy)
   const navigate = useNavigate()
   const location = useLocation()
-  const [isBusy, setIsBusy] = useBusy()
+  const { setIsBusy } = useBusy()
+  useListenerOfVocabs()
 
   useEffect(() => {
     if (!isDetermined) {
@@ -22,11 +25,9 @@ export function VocabPracticeApp() {
     setIsBusy(false)
 
     const isNoUserPage = ['/login', '/registration', '/logout'].includes(location.pathname)
-    if ((user && !isNoUserPage) || (!user && isNoUserPage)) {
-      return
+    if (location.pathname === '/' || (user && isNoUserPage) || (!user && !isNoUserPage)) {
+      navigate(user ? '/vocab' : '/login')
     }
-
-    navigate(user ? '/vocab' : '/login')
   }, [isDetermined, location.pathname, navigate, setIsBusy, user])
 
   return (

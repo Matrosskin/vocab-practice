@@ -11,7 +11,7 @@ export const useUserSettings = () => {
   const uid = useUid()
   const [userSettings, setUserSettings] = useState<IUserSettings>({})
   const isFirstTimeRef = useRef<boolean>(true)
-  const [, setIsBusy] = useBusy()
+  const { setIsBusy } = useBusy()
 
   useEffect(() => {
     if (!isFirstTimeRef.current) return

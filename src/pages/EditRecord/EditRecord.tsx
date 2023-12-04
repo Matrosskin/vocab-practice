@@ -17,7 +17,7 @@ type FieldType = {
 }
 
 export const EditRecord = () => {
-  const [, setIsBusy] = useBusy()
+  const { setIsBusy } = useBusy()
   const uid = useUid()
   const [form] = Form.useForm()
   const navigate = useNavigate()
