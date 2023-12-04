@@ -2,6 +2,7 @@ import { Form, Input } from 'antd'
 import { MutableRefObject, useEffect, useState } from 'react'
 import s from './VocabListItemNameInput.module.scss'
 import { IVocab } from '../../interfaces/IVocab'
+import { getSpaceOnlyForbiddenRule } from '../../misc/getSpaceOnlyForbiddenValidator'
 
 type FieldType = {
   itemName: string
@@ -51,7 +52,7 @@ export const VocabListItemNameInput = ({ vocab, onValidityChange, nameRef, onPre
         name='itemName'
         wrapperCol={{ span: 24 }}
         className={s.itemInput}
-        rules={[{ required: true, message: 'Please input your e-mail!' }]}
+        rules={[{ required: true, message: 'Please input your vocabulary name!' }, { validator: getSpaceOnlyForbiddenRule() }]}
       >
         <Input placeholder='Vocab name' onPressEnter={onPressEnter} />
       </Form.Item>

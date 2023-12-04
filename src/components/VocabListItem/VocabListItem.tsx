@@ -43,7 +43,7 @@ export const VocabListItem = ({ vocab, index, onCancel }: IVocabListItemProps) =
     const vocabListRef = ref(db, `v-p-app-v1/users/${uid}/vocabs`)
     const vocabRef = vocab.id ? child(vocabListRef, vocab.id) : push(vocabListRef)
     set(vocabRef, {
-      name: nameRef.current,
+      name: nameRef.current?.trim(),
     }).finally(() => {
       setIsEditing(false)
       setIsBusy(false)

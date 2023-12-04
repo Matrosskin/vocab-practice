@@ -9,7 +9,8 @@
  - [ ] Add statistic for records to prioritize most "forgotten" records.
  - [ ] Auto focus on input after opening of forms. For instance on create record, on create/edit vocab.
  - [ ] Add new record at top of list.
+   - [ ] Actually I should fetch records by pieces, not all together.
  - [ ] Auto check if new word is already in the list during typing of it in creation form.
- - [ ] Trim values before saving.
+ - [x] Trim values before saving.
  - [ ] Make practices optional per vocab. (enable/disable in settings)
  - [ ] Practice by showing of translation or description and proposing shuffled letters of main work, so user should order them properly.

@@ -20,7 +20,7 @@ export function LoginPage() {
   const onFinish = (values: any) => {
     setInProgress(true)
     setLoginError(null)
-    signInWithEmailAndPassword(getAuth(), values.email!, values.password!)
+    signInWithEmailAndPassword(getAuth(), values.email!.trim(), values.password!)
       .catch((error) => {
         if (['auth/invalid-email', 'auth/user-disabled', 'auth/user-not-found', 'auth/wrong-password'].indexOf(error.code) !== -1) {
           setLoginError({ code: error.code })

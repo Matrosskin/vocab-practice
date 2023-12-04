@@ -9,6 +9,7 @@ import Title from 'antd/es/typography/Title'
 import { SubmitButton } from '../user/SubmitButton/SubmitButton'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useRecord } from '../../hooks/useRecord'
+import { getSpaceOnlyForbiddenRule } from '../../misc/getSpaceOnlyForbiddenValidator'
 
 type FieldType = {
   word: string
@@ -33,9 +34,9 @@ export const EditRecord = () => {
       const recordListRef = ref(db, `v-p-app-v1/users/${uid}/records/vocab-${vocabId}`)
       const recordRef = recordId ? child(recordListRef, recordId) : push(recordListRef)
 
-      const recordData: Omit<IRecord, 'id'> = { word: values.word }
-      if (values.translation) recordData.translation = values.translation
-      if (values.description) recordData.description = values.description
+      const recordData: Omit<IRecord, 'id'> = { word: values.word.trim() }
+      if (values.translation) recordData.translation = values.translation.trim()
+      if (values.description) recordData.description = values.description.trim()
 
       set(recordRef, recordData)
         .then(
@@ -87,16 +88,26 @@ export const EditRecord = () => {
               label='Word/Phrase'
               name='word'
               initialValue={record?.word}
-              rules={[{ required: true, message: 'Please input word/phrase!' }]}
+              rules={[{ required: true, message: 'Please input word/phrase!' }, { validator: getSpaceOnlyForbiddenRule() }]}
             >
               <Input />
             </Form.Item>
 
-            <Form.Item<FieldType> label='Translation' name='translation' initialValue={record?.translation}>
+            <Form.Item<FieldType>
+              label='Translation'
+              name='translation'
+              initialValue={record?.translation}
+              rules={[{ validator: getSpaceOnlyForbiddenRule() }]}
+            >
               <Input />
             </Form.Item>
 
-            <Form.Item<FieldType> label='Description' name='description' initialValue={record?.description}>
+            <Form.Item<FieldType>
+              label='Description'
+              name='description'
+              initialValue={record?.description}
+              rules={[{ validator: getSpaceOnlyForbiddenRule() }]}
+            >
               <Input />
             </Form.Item>
 

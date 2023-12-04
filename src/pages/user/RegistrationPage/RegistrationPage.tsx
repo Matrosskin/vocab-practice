@@ -24,7 +24,7 @@ export function RegistrationPage() {
   const onFinish = (values: FieldType) => {
     setInProgress(true)
     setRegError(null)
-    createUserWithEmailAndPassword(getAuth(), values.email!, values.password!)
+    createUserWithEmailAndPassword(getAuth(), values.email!.trim(), values.password!)
       .then((result) => {
         setIsBusy(true)
 
