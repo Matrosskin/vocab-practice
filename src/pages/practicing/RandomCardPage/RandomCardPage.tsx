@@ -18,6 +18,7 @@ export const RandomCardPage = () => {
   const [isSectionVisible, setIsSectionVisible] = useState(defaultSectionVisibilityState)
 
   const showNextCard = useCallback(() => {
+    navigator.vibrate(45)
     const cardIndex = Math.round(Math.random() * (records.length - 1))
     setIsSectionVisible(defaultSectionVisibilityState)
     setCurrentCard(records[cardIndex])
@@ -55,27 +56,28 @@ export const RandomCardPage = () => {
         [s.moreThan40]: currentCard.word.length > 40,
       })}
       justify='space-between'
-      align='center'
+      align='stretch'
       vertical
     >
-      <Flex className={s.wordContainer} justify='center' align='center'>
-        {currentCard?.word}
+      <Flex vertical justify='space-between' align='stretch' flex={1} onClick={showNextCard} className={s.cardContent}>
+        <Flex className={s.wordContainer} justify='center' align='center'>
+          {currentCard?.word}
+        </Flex>
+
+        {isSectionVisible.translation && (
+          <Flex className={s.translationContainer} justify='center' align='center'>
+            {currentCard?.translation}
+          </Flex>
+        )}
+
+        {isSectionVisible.description && (
+          <Flex className={s.descriptionContainer} justify='center' align='center'>
+            {currentCard?.description}
+          </Flex>
+        )}
       </Flex>
 
-      {isSectionVisible.translation && (
-        <Flex className={s.translationContainer} justify='center' align='center'>
-          {currentCard?.translation}
-        </Flex>
-      )}
-
-      {isSectionVisible.description && (
-        <Flex className={s.descriptionContainer} justify='center' align='center'>
-          {currentCard?.description}
-        </Flex>
-      )}
-
-      <Flex className={s.actionsContainer} justify='space-between' align='center'>
-        <Button onClick={showNextCard}>Next</Button>
+      <Flex className={s.actionsContainer} justify='center' align='center'>
         {!isSectionVisible.translation && Boolean(currentCard?.translation) && <Button onClick={showTranslation}>Translation</Button>}
         {(isSectionVisible.translation || !currentCard?.translation) && !isSectionVisible.description && Boolean(currentCard?.description) && (
           <Button onClick={showDescription}>Description</Button>
