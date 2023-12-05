@@ -29,7 +29,7 @@
   },
   "scripts": {
     "start": "firebase emulators:exec --only auth,database --export-on-exit ./test_data/ --import ./test_data/ 'npm run start:react2'",
-    "start:emulators": "firebase emulators:start --only auth,database --export-on-exit ./test_data/ --import ./test_data/",
+    "start:emulators": "firebase emulators:start --only auth,database,functions --export-on-exit ./test_data/ --import ./test_data/",
     "start:react": "react-scripts start",
     "start:react2": "FORCE_COLOR=true react-scripts start | cat",
     "build": "react-scripts build",

@@ -29,7 +29,7 @@ export const useRecord = (vocabId: string, recordId?: string) => {
     }
 
     const db = getDatabase()
-    const recordRef = ref(db, `v-p-app-v1/users/${uid}/records/vocab-${vocabId}/${recordId}`)
+    const recordRef = ref(db, `v-p-app-v1/users/${uid}/records/${vocabId}/${recordId}`)
     return onValue(
       recordRef,
       (recordSnapshot) => {

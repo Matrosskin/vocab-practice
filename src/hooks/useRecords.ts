@@ -29,7 +29,7 @@ export const useRecords = (vocabId?: string, { withTranslation } = { withTransla
     }
 
     const db = getDatabase()
-    const recordListRef = ref(db, `v-p-app-v1/users/${uid}/records/vocab-${vocabId}`)
+    const recordListRef = ref(db, `v-p-app-v1/users/${uid}/records/${vocabId}`)
     return onValue(
       recordListRef,
       (allVocabRecordsSnapshot) => {

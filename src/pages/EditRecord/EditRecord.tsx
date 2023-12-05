@@ -31,7 +31,7 @@ export const EditRecord = () => {
       setIsBusy(true)
 
       const db = getDatabase()
-      const recordListRef = ref(db, `v-p-app-v1/users/${uid}/records/vocab-${vocabId}`)
+      const recordListRef = ref(db, `v-p-app-v1/users/${uid}/records/${vocabId}`)
       const recordRef = recordId ? child(recordListRef, recordId) : push(recordListRef)
 
       const recordData: Omit<IRecord, 'id'> = { word: values.word.trim() }
@@ -62,7 +62,7 @@ export const EditRecord = () => {
     setIsBusy(true)
 
     const db = getDatabase()
-    const recordRef = ref(db, `v-p-app-v1/users/${uid}/records/vocab-${vocabId}/${recordId}`)
+    const recordRef = ref(db, `v-p-app-v1/users/${uid}/records/${vocabId}/${recordId}`)
     remove(recordRef).finally(() => {
       navigate(`/vocab/${vocabId}`)
       setIsBusy(false)

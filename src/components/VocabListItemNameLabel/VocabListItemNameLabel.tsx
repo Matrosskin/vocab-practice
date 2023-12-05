@@ -1,4 +1,4 @@
-import { Typography } from 'antd'
+import { Badge, Typography } from 'antd'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
@@ -20,6 +20,8 @@ export const VocabListItemNameLabel = ({ vocab }: { vocab: IVocab }) => {
       )}
       {Boolean(vocab.id) && (
         <>
+          {' '}
+          <Badge count={vocab.recordsCount || 0} showZero color='DodgerBlue' />
           {' '}
           &nbsp;&nbsp;&nbsp;
           <Link to={`/vocab/${vocab.id}`}>

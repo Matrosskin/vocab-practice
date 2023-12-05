@@ -1,6 +1,6 @@
 # TODO:
 
- - [ ] Add counter for records.
+ - [x] Add counter for records.
  - [x] Add an availability to login/register via Google.
  - [ ] Investigate how to handle properly errors in react.
  - [x] Implement training with random cards.
@@ -15,3 +15,5 @@
  - [ ] Make practices optional per vocab. (enable/disable in settings)
  - [x] Practice by showing of translation or description and proposing shuffled letters of main work, so user should order them properly.
    - [ ] Currently shown "translation" value, but probably it make sense to show description, as it might be more informative... Or visibility of letters is enough... At list choosing of preferred value can be implemented as settings option.
+ - [ ] Add handling of keys like Esc or Enter. For instance during renaming of vocab it looks natural to cancel editing by Esc key.
+ - [ ] Create default vocab via Firebase functions instead of in web app.

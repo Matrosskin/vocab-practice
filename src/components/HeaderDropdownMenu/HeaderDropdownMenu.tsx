@@ -1,6 +1,6 @@
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Button, Dropdown, MenuProps } from 'antd'
+import { Badge, Button, Dropdown, MenuProps } from 'antd'
 import { useAppSelector } from '../../hooks/store'
 import { useMemo } from 'react'
 import { insertAIf } from '../../utils/insertAIf'
@@ -63,9 +63,13 @@ export const HeaderDropdownMenu = () => {
           key: 'vocabs',
           type: 'group',
           label: 'Your vocabs:',
-          children: vocabs.map(({ id, name }) => ({
+          children: vocabs.map(({ id, name, recordsCount }) => ({
             key: `vocab-item-${id}`,
-            label: <Link to={`/vocab/${id}`}>{name}</Link>,
+            label: (
+              <Link to={`/vocab/${id}`}>
+                {name} <Badge count={recordsCount || 0} showZero color='DodgerBlue' size='small' />
+              </Link>
+            ),
           })),
         },
         {

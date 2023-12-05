@@ -23,7 +23,7 @@ export const ManageVocabsPage = () => {
     const newVocab = vocabList.find((vocab) => !vocab.name)
     if (newVocab) return
 
-    setVocabList([...vocabList, { id: '', name: '' }])
+    setVocabList([...vocabList, { id: '', name: '', recordsCount: 0 }])
   }, [vocabList])
 
   const onCancelEditing = useCallback(

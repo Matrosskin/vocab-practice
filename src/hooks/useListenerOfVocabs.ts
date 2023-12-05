@@ -31,6 +31,7 @@ export const useListenerOfVocabs = () => {
           temporaryVocabs.push({
             id: vocabSnapshot.key!,
             name: val.name,
+            recordsCount: val.recordsCount,
           })
         })
         dispatch(setVocabs(temporaryVocabs))
